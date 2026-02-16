@@ -21,7 +21,7 @@ import { Package, Save, X } from "lucide-react";
 interface ProductFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (product: Omit<Product, "id"> & { id?: string }) => void;
+  onSave: (product: { nome: string; codigoId: string; validade: string; quantidade: number; unidade: "caixa" | "unidade"; editProductId?: string }) => void;
   editProduct?: Product | null;
 }
 
@@ -36,8 +36,8 @@ const ProductForm = ({ open, onOpenChange, onSave, editProduct }: ProductFormPro
     if (editProduct) {
       setNome(editProduct.nome);
       setCodigoId(editProduct.codigoId);
-      setValidade(editProduct.validade);
-      setQuantidade(String(editProduct.quantidade));
+      setValidade("");
+      setQuantidade("");
       setUnidade(editProduct.unidade);
     } else {
       setNome("");
@@ -51,12 +51,12 @@ const ProductForm = ({ open, onOpenChange, onSave, editProduct }: ProductFormPro
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave({
-      ...(editProduct ? { id: editProduct.id } : {}),
       nome,
       codigoId,
       validade,
       quantidade: Number(quantidade),
       unidade,
+      ...(editProduct ? { editProductId: editProduct.id } : {}),
     });
     onOpenChange(false);
   };
@@ -67,7 +67,7 @@ const ProductForm = ({ open, onOpenChange, onSave, editProduct }: ProductFormPro
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg">
             <Package className="h-5 w-5 text-secondary" />
-            {editProduct ? "Editar Produto" : "Cadastrar Produto"}
+            {editProduct ? "Adicionar Lote" : "Cadastrar Produto"}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
@@ -79,6 +79,7 @@ const ProductForm = ({ open, onOpenChange, onSave, editProduct }: ProductFormPro
               onChange={(e) => setNome(e.target.value)}
               placeholder="Ex: Arroz Integral"
               required
+              disabled={!!editProduct}
             />
           </div>
 
@@ -91,6 +92,7 @@ const ProductForm = ({ open, onOpenChange, onSave, editProduct }: ProductFormPro
                 onChange={(e) => setCodigoId(e.target.value)}
                 placeholder="Ex: 001"
                 required
+                disabled={!!editProduct}
               />
             </div>
             <div className="space-y-2">
@@ -144,7 +146,7 @@ const ProductForm = ({ open, onOpenChange, onSave, editProduct }: ProductFormPro
             </Button>
             <Button type="submit" className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90">
               <Save className="mr-1 h-4 w-4" />
-              {editProduct ? "Salvar" : "Cadastrar"}
+              {editProduct ? "Adicionar Lote" : "Cadastrar"}
             </Button>
           </div>
         </form>
