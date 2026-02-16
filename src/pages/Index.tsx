@@ -22,16 +22,40 @@ const Index = () => {
     );
   }, [products, search]);
 
-  const handleSave = (data: Omit<Product, "id"> & { id?: string }) => {
-    if (data.id) {
+  const handleSave = (data: { nome: string; codigoId: string; validade: string; quantidade: number; unidade: "caixa" | "unidade"; editProductId?: string }) => {
+    const newLote = { id: crypto.randomUUID(), validade: data.validade, quantidade: data.quantidade };
+
+    if (data.editProductId) {
+      // Adding a lote to existing product
       setProducts((prev) =>
-        prev.map((p) => (p.id === data.id ? { ...p, ...data } as Product : p))
+        prev.map((p) =>
+          p.id === data.editProductId
+            ? { ...p, lotes: [...p.lotes, newLote] }
+            : p
+        )
       );
     } else {
-      setProducts((prev) => [
-        ...prev,
-        { ...data, id: crypto.randomUUID() } as Product,
-      ]);
+      // Check if product with same codigoId exists
+      setProducts((prev) => {
+        const existing = prev.find((p) => p.codigoId === data.codigoId);
+        if (existing) {
+          return prev.map((p) =>
+            p.id === existing.id
+              ? { ...p, nome: data.nome, unidade: data.unidade, lotes: [...p.lotes, newLote] }
+              : p
+          );
+        }
+        return [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            nome: data.nome,
+            codigoId: data.codigoId,
+            unidade: data.unidade,
+            lotes: [newLote],
+          },
+        ];
+      });
     }
     setEditProduct(null);
   };
