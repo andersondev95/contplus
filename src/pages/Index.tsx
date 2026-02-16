@@ -81,7 +81,7 @@ const Index = () => {
         <div className="mx-auto max-w-3xl px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ClipboardList className="h-6 w-6 text-secondary" />
-            <h1 className="text-xl font-bold text-foreground">Estoque</h1>
+            <h1 className="text-xl font-bold text-foreground">Cont+</h1>
           </div>
           <Button onClick={handleOpenNew} className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm">
             <Plus className="mr-1 h-4 w-4" />
