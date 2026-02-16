@@ -4,7 +4,8 @@ import ProductForm from "@/components/ProductForm";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, PackageOpen, ClipboardList } from "lucide-react";
+import { Plus, Search, PackageOpen, ClipboardList, FileDown } from "lucide-react";
+import { exportEstoquePDF } from "@/lib/exportPDF";
 
 const Index = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -83,10 +84,21 @@ const Index = () => {
             <ClipboardList className="h-6 w-6 text-secondary" />
             <h1 className="text-xl font-bold text-foreground">Cont+</h1>
           </div>
-          <Button onClick={handleOpenNew} className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm">
-            <Plus className="mr-1 h-4 w-4" />
-            Cadastrar
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => exportEstoquePDF(products)}
+              disabled={products.length === 0}
+            >
+              <FileDown className="mr-1 h-4 w-4" />
+              PDF
+            </Button>
+            <Button onClick={handleOpenNew} className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm">
+              <Plus className="mr-1 h-4 w-4" />
+              Cadastrar
+            </Button>
+          </div>
         </div>
       </header>
 
