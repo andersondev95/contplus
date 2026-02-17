@@ -91,7 +91,7 @@ const Index = () => {
       <header className="sticky top-0 z-10 border-b border-border bg-card/80 backdrop-blur-md">
         <div className="mx-auto max-w-3xl px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={logo} alt="Cont+ logo" className="h-10 w-10" />
+            <img src={logo} alt="Cont+ logo" className="h-14 w-14" />
             <h1 className="text-xl font-bold text-foreground">Cont+</h1>
           </div>
           <div className="flex items-center gap-2">
