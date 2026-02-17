@@ -15,8 +15,15 @@ const Index = () => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : [];
   });
+  const [search, setSearch] = useState("");
+  const [formOpen, setFormOpen] = useState(false);
+  const [editProduct, setEditProduct] = useState<Product | null>(null);
 
-  const filtered = useMemo(() => {
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+  }, [products]);
+
+
     if (!search.trim()) return products;
     const q = search.toLowerCase();
     return products.filter(
