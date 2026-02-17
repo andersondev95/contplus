@@ -8,11 +8,13 @@ import { Plus, Search, PackageOpen, FileDown } from "lucide-react";
 import { exportEstoquePDF } from "@/lib/exportPDF";
 import logo from "@/assets/logo.png";
 
+const STORAGE_KEY = "contplus-products";
+
 const Index = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [search, setSearch] = useState("");
-  const [formOpen, setFormOpen] = useState(false);
-  const [editProduct, setEditProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Product[]>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const filtered = useMemo(() => {
     if (!search.trim()) return products;
@@ -82,7 +84,7 @@ const Index = () => {
       <header className="sticky top-0 z-10 border-b border-border bg-card/80 backdrop-blur-md">
         <div className="mx-auto max-w-3xl px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ClipboardList className="h-6 w-6 text-secondary" />
+            <img src={logo} alt="Cont+ logo" className="h-8 w-8" />
             <h1 className="text-xl font-bold text-foreground">Cont+</h1>
           </div>
           <div className="flex items-center gap-2">
