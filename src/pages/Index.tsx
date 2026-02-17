@@ -1,11 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Product } from "@/types/product";
 import ProductForm from "@/components/ProductForm";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, PackageOpen, ClipboardList, FileDown } from "lucide-react";
+import { Plus, Search, PackageOpen, FileDown } from "lucide-react";
 import { exportEstoquePDF } from "@/lib/exportPDF";
+import logo from "@/assets/logo.png";
 
 const Index = () => {
   const [products, setProducts] = useState<Product[]>([]);
