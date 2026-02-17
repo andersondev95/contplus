@@ -89,7 +89,7 @@ const Index = () => {
       <header className="sticky top-0 z-10 border-b border-border bg-card/80 backdrop-blur-md">
         <div className="mx-auto max-w-3xl px-4 py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={logo} alt="Cont+ logo" style={{ height: 65, width: 65 }} />
+            <img src={logo} alt="Cont+ logo" style={{ height: 60, width: 60 }} />
           </div>
           <div className="flex items-center gap-2">
             <Button
