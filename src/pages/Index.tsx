@@ -23,7 +23,7 @@ const Index = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
   }, [products]);
 
-
+  const filtered = useMemo(() => {
     if (!search.trim()) return products;
     const q = search.toLowerCase();
     return products.filter(
