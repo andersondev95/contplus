@@ -33,15 +33,13 @@ const Index = () => {
     );
   }, [products, search]);
 
-  const handleSave = (data: { nome: string; codigoId: string; validade: string; quantidade: number; unidade: "caixa" | "unidade"; editProductId?: string }) => {
-    const newLote = { id: crypto.randomUUID(), validade: data.validade, quantidade: data.quantidade };
-
+  const handleSave = (data: { nome: string; codigoId: string; unidade: "caixa" | "unidade"; lotes: { id: string; validade: string; quantidade: number }[]; editProductId?: string }) => {
     if (data.editProductId) {
-      // Adding a lote to existing product
+      // Editing existing product - update all fields
       setProducts((prev) =>
         prev.map((p) =>
           p.id === data.editProductId
-            ? { ...p, lotes: [...p.lotes, newLote] }
+            ? { ...p, nome: data.nome, codigoId: data.codigoId, unidade: data.unidade, lotes: data.lotes }
             : p
         )
       );
@@ -52,7 +50,7 @@ const Index = () => {
         if (existing) {
           return prev.map((p) =>
             p.id === existing.id
-              ? { ...p, nome: data.nome, unidade: data.unidade, lotes: [...p.lotes, newLote] }
+              ? { ...p, nome: data.nome, unidade: data.unidade, lotes: [...p.lotes, ...data.lotes] }
               : p
           );
         }
@@ -63,7 +61,7 @@ const Index = () => {
             nome: data.nome,
             codigoId: data.codigoId,
             unidade: data.unidade,
-            lotes: [newLote],
+            lotes: data.lotes,
           },
         ];
       });
